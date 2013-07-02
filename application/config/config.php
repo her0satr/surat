@@ -18,7 +18,7 @@
 $PortAddress = ($_SERVER['SERVER_PORT'] != 80) ? ':8666' : '';
 
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
-	$config['base_url']		= 'http://localhost'.$PortAddress.'/surat';
+	$config['base_url']		= 'http://localhost'.$PortAddress.'/surat/trunk';
 	$config['base_path']	= realpath(dirname(__FILE__) . '/../..');
 } else {
 	echo 'Please set up config.';

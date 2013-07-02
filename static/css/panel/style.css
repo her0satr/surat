@@ -781,7 +781,7 @@
 			.sidebar_hidden .sidebar_switch {margin-left:-832px;left:50%}
 		}
 
-.dataTable img.cursor { margin: 0 3px; }
+.dataTable img.button-cursor { margin: 0 3px; cursor: pointer; }
 
 .red { color: #FF0000; }
 .cursor { cursor: pointer !important; }

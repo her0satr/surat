@@ -1,3 +1,7 @@
+<?php
+	$web['host'] = site_url();
+	$web['base'] = base_url();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +31,6 @@
 	
 	<script>
 		document.documentElement.className += 'js';
-		var web = { host: '<?php echo site_url(); ?>/', base: '<?php echo base_url(); ?>' }
+		var web = <?php echo json_encode($web); ?>
 	</script>
 </head>

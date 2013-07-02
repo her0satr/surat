@@ -1,6 +1,6 @@
 <?php
 	preg_match('/panel\/([a-z0-9]+)\//', $_SERVER['REQUEST_URI'], $match);
-	$group_name = (!empty($match[1])) ? $match[1] : 'product';
+	$group_name = (!empty($match[1])) ? $match[1] : 'surat';
 ?>
 <a href="javascript:void(0)" class="sidebar_switch on_switch ttip_r" title="Hide Sidebar">Sidebar switch</a>
 <div class="sidebar"><div class="antiScroll"><div class="antiscroll-inner"><div class="antiscroll-content"><div class="sidebar_inner">
@@ -8,13 +8,13 @@
 		<div class="accordion-group">
 			<div class="accordion-heading">
 				<a href="#sub-1" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
-					<i class="icon-folder-close"></i> Product
+					<i class="icon-folder-close"></i> Surat
 				</a>
 			</div>
-			<div class="accordion-body collapse <?php echo ($group_name == 'product') ? 'in' : ''; ?>" id="sub-1">
+			<div class="accordion-body collapse <?php echo ($group_name == 'surat') ? 'in' : ''; ?>" id="sub-1">
 				<div class="accordion-inner">
 					<ul class="nav nav-list">
-						<li><a href="<?php echo site_url('panel/product/blog'); ?>">Blog</a></li>
+						<li><a href="<?php echo base_url('surat/key'); ?>">Key</a></li>
 						<li><a href="<?php echo site_url('panel/product/catalog'); ?>">Catalog</a></li>
                         <li><a href="<?php echo site_url('panel/product/category'); ?>">Category</a></li>
 						<li><a href="<?php echo site_url('panel/product/item'); ?>">Item</a></li>

@@ -15,6 +15,10 @@ define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 define('SHA_SECRET',							'raHa5!4');
+
+define('KEY',									'key');
+define('USER',									'user');
+
 /*
 define('STATUS_NOTA_PENDING',					1);
 
@@ -46,7 +50,7 @@ define('STORE_IMAGE_SLIDE',						'store_image_slide');
 define('STORE_PAYMENT_METHOD',					'store_payment_method');
 define('THEME',									'theme');
 define('TRANSACTION',							'transaction');
-define('USER',									'user');
+
 define('USER_STORE',							'user_store');
 
 /*	*/

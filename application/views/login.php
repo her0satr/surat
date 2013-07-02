@@ -9,6 +9,8 @@
         <br/>
         <div class="login_box">
 			<form method="post" id="login_form">
+				<input type="hidden" name="action" value="login" />
+				
 				<div class="top_b">Sign in</div>
 				<div id="alert" class="alert alert-info alert-login">Enter Email and Password.</div>
     			
@@ -25,7 +27,7 @@
 					</div>
 				</div>
 				<div class="btm_b clearfix">
-					<button class="btn btn-inverse pull-right login" type="button" style="margin: 0 10px 0 0;">Login</button>
+					<input type="submit" value="Login" class="btn btn-inverse pull-right" style="margin: 0 10px 0 0;" />
 				</div>
 			</form>
 			
@@ -57,16 +59,17 @@
         $(document).ready(function() {
 			setTimeout('$("html").removeClass("js")', 100);
 			
-			$('.login').click( function( e ) {
+			$('#login_form').submit( function() {
 				var param = Site.Form.GetValue('login_form');
-				param.action = 'Login';
-				Func.ajax({ url: web.host + 'ajax/user', param: param, callback: function(result) {
+				Func.ajax({ url: web.base + 'ajax/user', param: param, callback: function(result) {
 					if (result.status == 1) {
-						window.location.href = web.host + 'home';
+						window.location.href = web.base;
 					} else {
 						Func.show_message({ message: result.message });
 					}
 				} });
+				
+				return false;
             });
         });
     </script>

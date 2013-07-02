@@ -411,6 +411,7 @@ var Func = {
 		$(p.Container + ' [rel=twipsy]').blur(function() { $(this).twipsy('hide'); });
 	},
 	confirm_delete: function(p) {
+		WOOW = p;
 		bootbox.confirm("Apa anda yakin ?", function(result) {
 			if (! result) {
 				return;
@@ -419,15 +420,13 @@ var Func = {
 			$.ajax({ type: "POST", url: p.url, data: p.data }).done(function( RawResult ) {
 				eval('var result = ' + RawResult);
 				
-				if (p.cnt_mesage != null) {
-					Func.popup_result(p.cnt_mesage, result.message);
-				} else {
-					$('.message').html('<div class="alert alert-info"><a data-dismiss="alert" class="close">&times;</a>' + result.message + '</div>');
-				}
+				p.grid.load();
 				
 				if (result.status == 1) {
 					p.grid.load();
 				}
+				
+				Func.show_message({ message: result.message });
 			});
 		});
 	},
@@ -456,7 +455,9 @@ var Func = {
     },
 	reload: function(param) {
 		var callback = function() {
-			if ($('#' + param.id + '').next().find('.active').length == 0) {
+			if ($('#' + param.id + '_length select').length == 1) {
+				$('#' + param.id + '_length select').change();
+			} else if ($('#' + param.id + '').next().find('.active').length == 0) {
 				$('#' + param.id + ' thead th.sorting_asc').click();
 			} else {
 				$('#' + param.id + '').next().find('.active').click();
