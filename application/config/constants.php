@@ -17,7 +17,9 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 define('SHA_SECRET',							'raHa5!4');
 
 define('KEY',									'key');
+define('LETTER_TYPE',							'letter_type');
 define('USER',									'user');
+define('USER_TYPE',									'user_type');
 
 /*
 define('STATUS_NOTA_PENDING',					1);

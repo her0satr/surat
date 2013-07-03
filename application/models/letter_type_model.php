@@ -1,24 +1,24 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Key_model extends CI_Model {
+class Letter_Type_model extends CI_Model {
     function __construct() {
         parent::__construct();
 		
-        $this->field = array('id', 'name', 'code');
+        $this->field = array('id', 'name');
     }
 
     function update($param) {
         $result = array();
        
         if (empty($param['id'])) {
-            $insert_query  = GenerateInsertQuery($this->field, $param, KEY);
+            $insert_query  = GenerateInsertQuery($this->field, $param, LETTER_TYPE);
             $insert_result = mysql_query($insert_query) or die(mysql_error());
            
             $result['id'] = mysql_insert_id();
             $result['status'] = '1';
             $result['message'] = 'Data berhasil disimpan.';
         } else {
-            $update_query  = GenerateUpdateQuery($this->field, $param, KEY);
+            $update_query  = GenerateUpdateQuery($this->field, $param, LETTER_TYPE);
             $update_result = mysql_query($update_query) or die(mysql_error());
            
             $result['id'] = $param['id'];
@@ -33,7 +33,7 @@ class Key_model extends CI_Model {
         $array = array();
        
         if (isset($param['id'])) {
-            $select_query  = "SELECT * FROM ".KEY." WHERE id = '".$param['id']."' LIMIT 1";
+            $select_query  = "SELECT * FROM ".LETTER_TYPE." WHERE id = '".$param['id']."' LIMIT 1";
         }
        
         $select_result = mysql_query($select_query) or die(mysql_error());
@@ -48,12 +48,12 @@ class Key_model extends CI_Model {
         $array = array();
 		
 		$string_filter = GetStringFilter($param, @$param['column']);
-		$string_sorting = GetStringSorting($param, @$param['column'], 'TKey.name ASC');
+		$string_sorting = GetStringSorting($param, @$param['column'], 'LetterType.name ASC');
 		$string_limit = GetStringLimit($param);
 		
 		$select_query = "
-			SELECT SQL_CALC_FOUND_ROWS TKey.*
-			FROM `".KEY."` TKey
+			SELECT SQL_CALC_FOUND_ROWS LetterType.*
+			FROM `".LETTER_TYPE."` LetterType
 			WHERE 1 $string_filter
 			ORDER BY $string_sorting
 			LIMIT $string_limit
@@ -76,7 +76,7 @@ class Key_model extends CI_Model {
     }
 	
     function delete($param) {
-		$delete_query  = "DELETE FROM `".KEY."` WHERE id = '".$param['id']."' LIMIT 1";
+		$delete_query  = "DELETE FROM `".LETTER_TYPE."` WHERE id = '".$param['id']."' LIMIT 1";
 		$delete_result = mysql_query($delete_query) or die(mysql_error());
 		
 		$result['status'] = '1';

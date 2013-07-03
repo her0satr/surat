@@ -4,7 +4,7 @@ class User_model extends CI_Model {
     function __construct() {
         parent::__construct();
 		
-        $this->field = array('id', 'name', 'email', 'fullname', 'passwd', 'address');
+        $this->field = array( 'id', 'user_type_id', 'name', 'email', 'passwd' );
 		
 		/*	User Info */
 		/*	User Session
@@ -61,15 +61,16 @@ class User_model extends CI_Model {
 		$string_limit = GetStringLimit($param);
 		
 		$select_query = "
-			SELECT SQL_CALC_FOUND_ROWS User.*
+			SELECT SQL_CALC_FOUND_ROWS User.*, UserType.name user_type_name
 			FROM ".USER." User
+			LEFT JOIN ".USER_TYPE." UserType ON UserType.id = User.user_type_id
 			WHERE 1 $string_filter
 			ORDER BY $string_sorting
 			LIMIT $string_limit
 		";
         $select_result = mysql_query($select_query) or die(mysql_error());
 		while ( $row = mysql_fetch_assoc( $select_result ) ) {
-			$array[] = $this->sync($row, @$param['column']);
+			$array[] = $this->sync($row, $param);
 		}
 		
         return $array;
@@ -94,16 +95,11 @@ class User_model extends CI_Model {
         return $result;
     }
 	
-	function sync($row, $column = array()) {
+	function sync($row, $param = array()) {
 		$row = StripArray($row);
-		$row['user_store_link'] = site_url('panel/account/user_store?user_id='.$row['id']);
 		
-		if (count($column) > 0) {
-			$p = array(
-				'is_edit' => 1,
-				'is_custom' => '<img class="cursor store" src="'.base_url('static/img/store.png').'" /> '
-			);
-			$row = dt_view($row, $column, $p);
+		if (count(@$param['column']) > 0) {
+			$row = dt_view_set($row, $param);
 		}
 		
 		return $row;
