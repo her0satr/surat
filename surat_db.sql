@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 02, 2013 at 04:32 PM
--- Server version: 5.1.41
--- PHP Version: 5.3.1
+-- Waktu pembuatan: 06. Juli 2013 jam 08:54
+-- Versi Server: 5.1.41
+-- Versi PHP: 5.3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -22,7 +22,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `key`
+-- Struktur dari tabel `key`
 --
 
 CREATE TABLE IF NOT EXISTS `key` (
@@ -30,19 +30,20 @@ CREATE TABLE IF NOT EXISTS `key` (
   `name` varchar(100) NOT NULL,
   `code` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
--- Dumping data for table `key`
+-- Dumping data untuk tabel `key`
 --
 
 INSERT INTO `key` (`id`, `name`, `code`) VALUES
-(9, '1', '2');
+(9, '1', '2'),
+(10, '22', '22');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `letter`
+-- Struktur dari tabel `letter`
 --
 
 CREATE TABLE IF NOT EXISTS `letter` (
@@ -56,34 +57,40 @@ CREATE TABLE IF NOT EXISTS `letter` (
   `date_print` date NOT NULL,
   `date_confirm` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `letter`
+-- Dumping data untuk tabel `letter`
 --
 
+INSERT INTO `letter` (`id`, `letter_type_id`, `public_key`, `letter_no`, `letter_file`, `desc`, `source`, `date_print`, `date_confirm`) VALUES
+(2, 3, '22', '11', '', '5', '22', '2013-07-01', '2013-07-02'),
+(3, 2, '22', '123456', '', 'bukakasss', '555', '2013-07-13', '2013-07-20');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `letter_type`
+-- Struktur dari tabel `letter_type`
 --
 
 CREATE TABLE IF NOT EXISTS `letter_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `letter_type`
+-- Dumping data untuk tabel `letter_type`
 --
 
+INSERT INTO `letter_type` (`id`, `name`) VALUES
+(2, 'Surat Masuk'),
+(3, 'Surat Keluar');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
@@ -93,29 +100,30 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(200) NOT NULL,
   `passwd` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id`, `user_type_id`, `name`, `email`, `passwd`) VALUES
-(1, 1, 'Herry', 'her0satr@yahoo.com', 'd0cccd72f00289035b8e25ff29100dee');
+(1, 1, 'Herry', 'her0satr@yahoo.com', 'd0cccd72f00289035b8e25ff29100dee'),
+(4, 1, 'Yani', 'yani@yahoo.com', '933902c6f005618c80b7760478a14cc1');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_type`
+-- Struktur dari tabel `user_type`
 --
 
 CREATE TABLE IF NOT EXISTS `user_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Dumping data for table `user_type`
+-- Dumping data untuk tabel `user_type`
 --
 
 INSERT INTO `user_type` (`id`, `name`) VALUES

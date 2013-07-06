@@ -15,9 +15,7 @@
 				<div class="accordion-inner">
 					<ul class="nav nav-list">
 						<li><a href="<?php echo base_url('surat/key'); ?>">Key</a></li>
-						<li><a href="<?php echo site_url('panel/product/catalog'); ?>">Catalog</a></li>
-                        <li><a href="<?php echo site_url('panel/product/category'); ?>">Category</a></li>
-						<li><a href="<?php echo site_url('panel/product/item'); ?>">Item</a></li>
+						<li><a href="<?php echo base_url('surat/letter'); ?>">Surat</a></li>
 					</ul>
 				</div>
 			</div>
