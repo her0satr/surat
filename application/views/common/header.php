@@ -6,7 +6,7 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
-				<a class="brand" href="<?php echo site_url('panel/home'); ?>"><i class="icon-home icon-white"></i> Admin Surat</a>
+				<a class="brand" href="<?php echo site_url('surat'); ?>"><i class="icon-home icon-white"></i> Admin Surat</a>
 				<ul class="nav user_menu pull-right">
 					<?php if ($is_login) { ?>
 						<li class="dropdown">

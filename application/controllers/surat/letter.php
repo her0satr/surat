@@ -15,6 +15,10 @@ class letter extends PANEL_Controller {
 		
 		$result = array();
 		if ($action == 'update') {
+			if (is_array($_POST['array_file'])) {
+				$_POST['letter_file'] = json_encode($_POST['array_file']);
+			}
+			
 			$result = $this->Letter_model->update($_POST);
 		} else if ($action == 'delete') {
 			$result = $this->Letter_model->delete($_POST);

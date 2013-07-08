@@ -14,6 +14,7 @@
 		<?php $this->load->view( 'common/header' ); ?>
 		<div class="hide">
 			<div id="RawUser"><?php echo json_encode($user); ?></div>
+			<iframe name="iframe_letter" src="<?php echo base_url('home/upload?callback=upload_letter&filetype=document'); ?>"></iframe>
 		</div>
 		
 		<div id="WinLetter" class="modal modal-big hide fade" tabindex="-1" role="dialog" aria-labelledby="windowTitleLabel" aria-hidden="true">
@@ -67,6 +68,16 @@
 						<label class="control-label">Keterangan</label>
 						<div class="controls"><textarea name="desc" class="span5"></textarea></div>
                     </div>
+					<div class="control-group">
+						<label class="control-label">Upload</label>
+						<div class="controls"><a class="btn btn-primary btn-upload cursor">Tambah File</a></div>
+                    </div>
+					<div class="control-group">
+						<label class="control-label">&nbsp;</label>
+						<div class="controls"><ul class="list-file"></ul></div>
+                    </div>
+					<div>
+					</div>
                 </form>
             </div>
 			<div class="modal-footer">
@@ -106,9 +117,43 @@
 	
 	<?php $this->load->view( 'common/js' ); ?>
 	<script>
+		var page = {
+			init_list: function() {
+				$('.remove-file').click(function() {
+					$(this).parents('li').remove();
+				});
+			},
+			generate_list: function(array_file) {
+				var content = '';
+				for (var i = 0; i < array_file.length; i++) {
+					var raw_text = array_file[i].file_name;
+					raw_text += '<input type="hidden" name="array_file[]" value="' + array_file[i].file_name + '" /> ';
+					raw_text += '(<a class="cursor remove-file">hapus</a> | <a class="download-file" target="_blank" href="' + array_file[i].file_link + '">download</a>)';
+					content += '<li>' + raw_text + '</li>';
+				}
+				
+				$('.list-file').append(content);
+				page.init_list();
+			},
+			clear_list: function() {
+				$('.list-file').html('');
+			}
+		}
+		
+		upload_letter = function(p) {
+			if (p.message.length > 0) {
+				Func.show_message({ message: p.message })
+				return;
+			}
+			
+			page.generate_list([p]);
+		}
+		
 		$(document).ready(function() {
 			grid_letter = null;
 			setTimeout('$("html").removeClass("js")', 300);
+			
+			$('#WinLetter .btn-upload').click(function() { window.iframe_letter.browse() });
 			
 			// user
 			var RawUser = $('#RawUser').text();
@@ -120,6 +165,7 @@
             });
 			
 			$('.AddLetter').click(function() {
+				page.clear_list();
 				$('#WinLetter form')[0].reset()
 				$('#WinLetter [name="id"]').val(0);
 				$('#WinLetter').modal();
@@ -162,9 +208,13 @@
 					$('#WinLetter [name="source"]').val(record.source);
 					$('#WinLetter [name="letter_no"]').val(record.letter_no);
 					$('#WinLetter [name="public_key"]').val(record.public_key);
-					$('#WinLetter [name="date_print"]').val(record.date_print);
-					$('#WinLetter [name="date_confirm"]').val(record.date_confirm);
+					$('#WinLetter [name="date_print"]').val(Func.SwapDate(record.date_print));
+					$('#WinLetter [name="date_confirm"]').val(Func.SwapDate(record.date_confirm));
 					$('#WinLetter [name="letter_type_id"]').val(record.letter_type_id);
+					
+					page.clear_list();
+					page.generate_list(record.array_file);
+					
 					$('#WinLetter').modal();
                 });
 				

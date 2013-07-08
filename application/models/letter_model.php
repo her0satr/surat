@@ -92,6 +92,14 @@ class Letter_model extends CI_Model {
 	function sync($row, $param = array()) {
 		$row = StripArray($row, array( 'date_confirm', 'date_print' ));
 		
+		$row['array_file'] = array();
+		if (!empty($row['letter_file'])) {
+			$array = json_decode($row['letter_file']);
+			foreach ($array as $file) {
+				$row['array_file'][] = array( 'file_name' => $file, 'file_link' => base_url('static/upload/'.$file) );
+			}
+		}
+		
 		if (count(@$param['column']) > 0) {
 			$row = dt_view_set($row, $param);
 		}

@@ -8,4 +8,8 @@ class home extends PANEL_Controller {
     function index() {
 		$this->load->view( 'home' );
     }
+	
+	function upload() {
+		$this->load->view( 'common/upload_single' );
+	}
 }
