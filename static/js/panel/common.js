@@ -325,7 +325,7 @@ var Func = {
 		
 		$(p.Container + ' .tinymce').tinymce({
 			// Location of TinyMCE script
-			script_url : '../../../static/lib/tinymce/jscripts/tiny_mce/tiny_mce.js',
+			script_url : web.base + 'static/lib/tinymce/jscripts/tiny_mce/tiny_mce.js',
 
 			// General options
 			theme : "advanced",

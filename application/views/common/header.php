@@ -3,6 +3,7 @@
 	$user = ($is_login) ? $this->User_model->get_session() : array();
 ?>
 <header id="cnt-header">
+	<div><img src="<?php echo base_url('static/img/header.jpg'); ?>" style="width: 100%;" /></div>
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">

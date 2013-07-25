@@ -7,7 +7,7 @@
 
 <?php $this->load->view( 'common/meta' ); ?>
 <body>
-	<div id="loading_layer hide"><img src="<?php echo base_url(); ?>static/img/ajax_loader.gif" /></div>
+	<div id="loading_layer"><img src="<?php echo base_url(); ?>static/img/ajax_loader.gif" /></div>
 	
 	<div id="maincontainer" class="clearfix">
 		<?php $this->load->view( 'common/header' ); ?>

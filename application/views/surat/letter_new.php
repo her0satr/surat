@@ -1,7 +1,8 @@
 <?php
-	$array_menu = array( 'menu' => array('Master', 'Jenis Pengguna') );
+	$array_menu = array( 'menu' => array( 'Surat', 'Pembuatan Surat' ) );
 	
 	$user = $this->User_model->get_session();
+	$array_letter_type = $this->Letter_Type_model->get_array();
 ?>
 
 <?php $this->load->view( 'common/meta' ); ?>
@@ -14,10 +15,10 @@
 			<div id="RawUser"><?php echo json_encode($user); ?></div>
 		</div>
 		
-		<div id="WinLetterType" class="modal modal-big hide fade" tabindex="-1" role="dialog" aria-labelledby="windowTitleLabel" aria-hidden="true">
+		<div id="WinLetter" class="modal modal-bigest hide fade" tabindex="-1" role="dialog" aria-labelledby="windowTitleLabel" aria-hidden="true">
 			<div class="modal-header">
 				<a href="#" class="close" data-dismiss="modal">&times;</a>
-				<h3>Form Jenis Pengguna</h3>
+				<h3>Form Pembuatan Surat</h3>
             </div>
 			<div class="modal-body" style="padding-left: 0px;">
 				<div class="pad-alert" style="padding-left: 15px;"></div>
@@ -26,11 +27,22 @@
 					<input type="hidden" name="action" value="update" />
 					
 					<div class="control-group">
-						<label class="control-label" for="input_name">Nama</label>
-						<div class="controls">
-							<input type="text" id="input_name" name="name" placeholder="Nama Jenis Pengguna" class="span5" rel="twipsy" />
-                        </div>
+						<label class="control-label">Jenis Surat</label>
+						<div class="controls"><select name="letter_type_id" class="span5">
+							<?php echo ShowOption(array( 'Array' => $array_letter_type, 'ArrayID' => 'id', 'ArrayTitle' => 'name' )); ?>
+						</select></div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">No Surat</label>
+						<div class="controls"><input type="text" name="no_surat" placeholder="No Surat" class="span5" rel="twipsy" /></div>
                     </div>
+					<div class="control-group">
+						<label class="control-label">Tanggal</label>
+						<div class="controls"><input type="text" name="date_surat" placeholder="Tanggal Surat" class="span3 datepicker" rel="twipsy" /></div>
+                    </div>
+					<div style="padding: 0 0 0 10px;">
+						<textarea style="width: 100%; height: 500px;" class="tinymce" name="desc"></textarea>
+					</div>
                 </form>
             </div>
 			<div class="modal-footer">
@@ -45,7 +57,7 @@
 				
 				<div class="row-fluid">
 					<div class="btn-group">
-						<button class="btn btn-gebo AddLetterType">Tambah</button>
+						<button class="btn btn-gebo AddLetter">Tambah</button>
                     </div>
                 </div>
 				
@@ -53,7 +65,9 @@
 					<div class="span12">
 						<table id="grid-letter" class="table table-striped table-bordered dTableR">
 							<thead><tr>
-								<th>Nama</th>
+								<th>Tanggal</th>
+								<th>Jenis Surat</th>
+								<th>No Surat</th>
 								<th style="width: 80px;">&nbsp;</th>
 							</tr></thead>
 							<tbody><tr><td class="dataTables_empty">Loading data from server</td></tr></tbody>
@@ -76,48 +90,52 @@
 			eval('var user = ' + RawUser);
 			
 			Func.InitForm({
-				Container: '#WinLetterType',
-				rule: { name: { required: true } }
+				Container: '#WinLetter',
+				rule: { letter_type_id: { required: true }, no_surat: { required: true }, date_surat: { required: true } }
             });
 			
-			$('.AddLetterType').click(function() {
-				$('#WinLetterType form')[0].reset()
-				$('#WinLetterType [name="id"]').val(0);
-				$('#WinLetterType').modal();
+			$('.AddLetter').click(function() {
+				$('#WinLetter form')[0].reset()
+				$('#WinLetter [name="id"]').val(0);
+				$('#WinLetter').modal();
             });
-			$('#WinLetterType .save').click(function() {
-				if (! $('#WinLetterType form').valid()) {
+			$('#WinLetter .save').click(function() {
+				if (! $('#WinLetter form').valid()) {
 					return;
                 }
 				
-				var param = Site.Form.GetValue('WinLetterType');
-				Func.ajax({ url: web.base + 'master/user_type/action', param: param, callback: function(result) {
+				var param = Site.Form.GetValue('WinLetter');
+				param.date_surat = Func.SwapDate(param.date_surat);
+				Func.ajax({ url: web.base + 'surat/letter_new/action', param: param, callback: function(result) {
 					Func.show_message({ message: result.message })
 					if (result.status == 1) {
 						grid_letter.load();
-						$('#WinLetterType').modal('hide');
+						$('#WinLetter').modal('hide');
 					}
                 } });
             });
-			$('#WinLetterType .cancel').click(function() {
-				$('#WinLetterType').modal('hide');
+			$('#WinLetter .cancel').click(function() {
+				$('#WinLetter').modal('hide');
             });
 			
 			function init_table() {
 				grid_letter = $('#grid-letter').dataTable( {
-					"aaSorting": [[0, 'desc']], "sServerMethod": "POST",
+					"aaSorting": [[0, 'asc']], "sServerMethod": "POST",
 					"bProcessing": true, "bServerSide": true, "sPaginationType": "bootstrap",
-					"sAjaxSource": web.base + 'master/user_type/grid',
-					"aoColumns": [ null, { "sClass": "center", "bSortable": false } ]
+					"sAjaxSource": web.base + 'surat/letter_new/grid',
+					"aoColumns": [ null, null, null, { "sClass": "center", "bSortable": false } ]
                 } );
 				grid_letter.load = Func.reload({ id: 'grid-letter' });
 				
 				$('#grid-letter').on('click','tbody td img.edit', function () {
 					var raw = $(this).parent('td').find('.hide').text();
 					eval('var record = ' + raw);
-					$('#WinLetterType [name="id"]').val(record.id);
-					$('#WinLetterType [name="name"]').val(record.name);
-					$('#WinLetterType').modal();
+					$('#WinLetter [name="id"]').val(record.id);
+					$('#WinLetter [name="letter_type_id"]').val(record.letter_type_id);
+					$('#WinLetter [name="no_surat"]').val(record.no_surat);
+					$('#WinLetter [name="date_surat"]').val(Func.SwapDate(record.date_surat));
+					$('#WinLetter [name="desc"]').val(record.desc);
+					$('#WinLetter').modal();
                 });
 				
 				$('#grid-letter').on('click','tbody td img.delete', function () {
@@ -126,9 +144,15 @@
 					
 					Func.confirm_delete({
 						data: { action: 'delete', id: record.id },
-						url: web.base + 'master/user_type/action',
+						url: web.base + 'surat/letter_new/action',
 						grid: grid_letter
                     });
+                });
+				
+				$('#grid-letter').on('click','tbody td img.print', function () {
+					var raw = $(this).parent('td').find('.hide').text();
+					eval('var record = ' + raw);
+					window.open(web.base + 'surat/letter_new/cetak/' + record.id);
                 });
             }
 			init_table();

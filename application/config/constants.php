@@ -18,45 +18,10 @@ define('SHA_SECRET',							'raHa5!4');
 
 define('KEY',									'key');
 define('LETTER',								'letter');
+define('LETTER_NEW',							'letter_new');
 define('LETTER_TYPE',							'letter_type');
 define('USER',									'user');
 define('USER_TYPE',								'user_type');
-
-/*
-define('STATUS_NOTA_PENDING',					1);
-
-define('DB_NAME',								'shop_db');
-define('ADDRESS',								'address');
-define('BANK_ACCOUNT',							'bank_account');
-define('CATEGORY',								'category');
-define('CITY',									'city');
-define('COUNTRY',								'country');
-define('BLOG',									'blog');
-define('BLOG_STATUS',							'blog_status');
-define('CATALOG',								'catalog');
-define('CURRENCY',								'currency');
-define('ITEM',									'item');
-define('ITEM_CATALOG',							'item_catalog');
-define('ITEM_CATEGORY',							'item_category');
-define('ITEM_PICTURE',							'item_picture');
-define('ITEM_PRICE',							'item_price');
-define('ITEM_STATUS',							'item_status');
-define('NEWSLETTER',							'newsletter');
-define('NOTA',									'nota');
-define('PAYMENT_METHOD',						'payment_method');
-define('PICTURE',								'picture');
-define('PROVINCE',								'province');
-define('STATUS_NOTA',							'status_nota');
-define('STORE',									'store');
-define('STORE_DETAIL',							'store_detail');
-define('STORE_IMAGE_SLIDE',						'store_image_slide');
-define('STORE_PAYMENT_METHOD',					'store_payment_method');
-define('THEME',									'theme');
-define('TRANSACTION',							'transaction');
-
-define('USER_STORE',							'user_store');
-
-/*	*/
 
 
 /* End of file constants.php */

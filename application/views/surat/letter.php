@@ -1,5 +1,5 @@
 <?php
-	$array_menu = array( 'menu' => array('Surat', 'Surat') );
+	$array_menu = array( 'menu' => array('Surat', 'Dokumentasi Surat') );
 	
 	$user = $this->User_model->get_session();
 	$array_key = $this->Key_model->get_array();
@@ -8,7 +8,7 @@
 
 <?php $this->load->view( 'common/meta' ); ?>
 <body>
-	<div id="loading_layer hide"><img src="<?php echo base_url(); ?>static/img/ajax_loader.gif" alt="" /></div>
+	<div id="loading_layer"><img src="<?php echo base_url(); ?>static/img/ajax_loader.gif" alt="" /></div>
 	
 	<div id="maincontainer" class="clearfix">
 		<?php $this->load->view( 'common/header' ); ?>
@@ -34,7 +34,7 @@
 							<?php echo ShowOption(array( 'Array' => $array_letter_type, 'ArrayID' => 'id', 'ArrayTitle' => 'name' )); ?>
 						</select></div>
 					</div>
-					<div class="control-group">
+					<div class="control-group hide">
 						<label class="control-label">Kunci</label>
 						<div class="controls"><select name="public_key">
 							<?php echo ShowOption(array( 'Array' => $array_key, 'ArrayID' => 'name', 'ArrayTitle' => 'name' )); ?>

@@ -14,8 +14,9 @@
 			<div class="accordion-body collapse <?php echo ($group_name == 'surat') ? 'in' : ''; ?>" id="sub-1">
 				<div class="accordion-inner">
 					<ul class="nav nav-list">
-						<li><a href="<?php echo base_url('surat/key'); ?>">Key</a></li>
-						<li><a href="<?php echo base_url('surat/letter'); ?>">Surat</a></li>
+						<!-- <li><a href="<?php echo base_url('surat/key'); ?>">Key</a></li>	-->
+						<li><a href="<?php echo base_url('surat/letter'); ?>">Dokumentasi Surat</a></li>
+						<li><a href="<?php echo base_url('surat/letter_new'); ?>">Pembuatan Surat</a></li>
 					</ul>
 				</div>
 			</div>

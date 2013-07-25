@@ -21,3 +21,9 @@
 
 <script src="<?php echo base_url(); ?>static/js/panel/common.js"></script>
 <script src="<?php echo base_url(); ?>static/js/panel/gebo_common.js"></script>
+
+<script>
+$(document).ready(function() {
+	$('#loading_layer').hide();
+});
+</script>

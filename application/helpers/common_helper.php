@@ -721,6 +721,9 @@ if (! function_exists('dt_view_set')) {
 			$temp_column .= '<img class="button-cursor edit" src="'.base_url('static/img/button_edit.png').'"> ';
 			$temp_column .= '<img class="button-cursor delete" src="'.base_url('static/img/button_delete.png').'"> ';
 		}
+		if (!empty($param['is_custom'])) {
+			$temp_column .= $param['is_custom'];
+		}
 		
 		// populate required data
 		$record = array();
