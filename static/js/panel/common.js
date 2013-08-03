@@ -473,6 +473,19 @@ var Func = {
 	},
 	show_message: function(p) {
 		$.sticky(p.message, { autoclose : 5000, position: "top-right", type: "st-error" });
+	},
+	populate: function(p) {
+		for (var form_name in p.record) {
+			if (p.record.hasOwnProperty(form_name)) {
+				var input = $(p.cnt + ' [name="' + form_name + '"]');
+				var value = p.record[form_name];
+				if (input.hasClass('datepicker')) {
+					input.val(Func.SwapDate(value));
+				} else {
+					input.val(value);
+				}
+			}
+		}
 	}
 }
 

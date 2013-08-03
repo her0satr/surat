@@ -7,6 +7,9 @@
 ?>
 
 <?php $this->load->view( 'common/meta' ); ?>
+<style>
+.btn_action { width: 80px !important; }
+</style>
 <body>
 	<div id="loading_layer"><img src="<?php echo base_url(); ?>static/img/ajax_loader.gif" alt="" /></div>
 	
@@ -104,7 +107,7 @@
 								<th>No Surat</th>
 								<th>Jenis Surat</th>
 								<th>Pengirim</th>
-								<th style="width: 80px;">&nbsp;</th>
+								<th class="btn_action">&nbsp;</th>
 							</tr></thead>
 							<tbody><tr><td class="dataTables_empty">Loading data from server</td></tr></tbody>
                         </table>
@@ -227,6 +230,12 @@
 						url: web.base + 'surat/letter/action',
 						grid: grid_letter
                     });
+                });
+				
+				$('#grid-letter').on('click','tbody td img.disposisi', function () {
+					var raw = $(this).parent('td').find('.hide').text();
+					eval('var record = ' + raw);
+					window.location = web.base + 'surat/disposisi/index/' + record.id;
                 });
             }
 			init_table();

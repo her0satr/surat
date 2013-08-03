@@ -30,6 +30,7 @@ class letter extends PANEL_Controller {
 	function grid() {
 		$_POST['is_edit'] = 1;
 		$_POST['column'] = array( 'id', 'letter_no', 'letter_type_name', 'source' );
+		$_POST['is_custom'] = '<img class="button-cursor disposisi" src="'.base_url('static/img/button_letter.png').'"> ';
 		
 		$output = array(
 			"sEcho" => intval($_POST['sEcho']),

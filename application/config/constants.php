@@ -16,6 +16,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 define('SHA_SECRET',							'raHa5!4');
 
+define('DISPOSISI',								'disposisi');
 define('KEY',									'key');
 define('LETTER',								'letter');
 define('LETTER_NEW',							'letter_new');

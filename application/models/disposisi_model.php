@@ -1,29 +1,24 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class User_model extends CI_Model {
+class Disposisi_model extends CI_Model {
     function __construct() {
         parent::__construct();
 		
-        $this->field = array( 'id', 'user_type_id', 'name', 'email', 'passwd' );
-		
-		/*	User Info */
-		/*	User Session
-			name : user_login => array user
-		/*	*/
+        $this->field = array( 'id', 'user_id', 'letter_id', 'no_agenda', 'date_letter', 'date_finish', 'no_date_letter', 'source', 'instruction', 'continued', 'note' );
     }
 
     function update($param) {
         $result = array();
        
         if (empty($param['id'])) {
-            $insert_query  = GenerateInsertQuery($this->field, $param, USER);
+            $insert_query  = GenerateInsertQuery($this->field, $param, DISPOSISI);
             $insert_result = mysql_query($insert_query) or die(mysql_error());
            
             $result['id'] = mysql_insert_id();
             $result['status'] = '1';
             $result['message'] = 'Data berhasil disimpan.';
         } else {
-            $update_query  = GenerateUpdateQuery($this->field, $param, USER);
+            $update_query  = GenerateUpdateQuery($this->field, $param, DISPOSISI);
             $update_result = mysql_query($update_query) or die(mysql_error());
            
             $result['id'] = $param['id'];
@@ -38,13 +33,9 @@ class User_model extends CI_Model {
         $array = array();
        
         if (isset($param['id'])) {
-            $select_query  = "SELECT * FROM ".USER." WHERE id = '".$param['id']."' LIMIT 1";
-        } else if (isset($param['email'])) {
-            $select_query  = "SELECT * FROM ".USER." WHERE email = '".$param['email']."' LIMIT 1";
-        } else if (isset($param['name'])) {
-            $select_query  = "SELECT * FROM ".USER." WHERE name = '".$param['name']."' LIMIT 1";
+            $select_query  = "SELECT * FROM ".DISPOSISI." WHERE id = '".$param['id']."' LIMIT 1";
         }
-		
+       
         $select_result = mysql_query($select_query) or die(mysql_error());
         if (false !== $row = mysql_fetch_assoc($select_result)) {
             $array = $this->sync($row);
@@ -56,15 +47,19 @@ class User_model extends CI_Model {
     function get_array($param = array()) {
         $array = array();
 		
+		$param['field_replace']['id'] = 'Disposisi.id';
+		
+		$string_letter = (!empty($param['letter_id'])) ? "AND Disposisi.letter_id = '".$param['letter_id']."'" : "";
 		$string_filter = GetStringFilter($param, @$param['column']);
-		$string_sorting = GetStringSorting($param, @$param['column'], 'name ASC');
+		$string_sorting = GetStringSorting($param, @$param['column'], 'Disposisi.name ASC');
 		$string_limit = GetStringLimit($param);
 		
 		$select_query = "
-			SELECT SQL_CALC_FOUND_ROWS User.*, UserType.name user_type_name
-			FROM ".USER." User
-			LEFT JOIN ".USER_TYPE." UserType ON UserType.id = User.user_type_id
-			WHERE 1 $string_filter
+			SELECT SQL_CALC_FOUND_ROWS Disposisi.*, Letter.letter_no, User.name user_name
+			FROM `".DISPOSISI."` Disposisi
+			LEFT JOIN ".LETTER." Letter ON Letter.id = Disposisi.letter_id
+			LEFT JOIN ".USER." User ON User.id = Disposisi.user_id
+			WHERE 1 $string_letter $string_filter
 			ORDER BY $string_sorting
 			LIMIT $string_limit
 		";
@@ -86,7 +81,7 @@ class User_model extends CI_Model {
     }
 	
     function delete($param) {
-		$delete_query  = "DELETE FROM ".USER." WHERE id = '".$param['id']."' LIMIT 1";
+		$delete_query  = "DELETE FROM `".DISPOSISI."` WHERE id = '".$param['id']."' LIMIT 1";
 		$delete_result = mysql_query($delete_query) or die(mysql_error());
 		
 		$result['status'] = '1';
@@ -96,7 +91,7 @@ class User_model extends CI_Model {
     }
 	
 	function sync($row, $param = array()) {
-		$row = StripArray($row);
+		$row = StripArray($row, array( 'date_letter', 'date_finish' ));
 		
 		if (count(@$param['column']) > 0) {
 			$row = dt_view_set($row, $param);
@@ -104,36 +99,4 @@ class User_model extends CI_Model {
 		
 		return $row;
 	}
-	
-	/*	Region User Session */
-	
-	function login_required() {
-		$is_login = $this->is_login();
-		
-		if (! $is_login) {
-			header("Location: ".base_url('login'));
-			exit;
-		}
-	}
-	
-	function is_login() {
-		$user = $this->get_session();
-		$is_login = (count($user) == 0) ? false : true;
-		return $is_login;
-	}
-	
-	function set_session($param) {
-		$_SESSION['user_login'] = $param;
-	}
-	
-	function get_session() {
-		$user = (isset($_SESSION['user_login'])) ? $_SESSION['user_login'] : array();
-		return $user;
-	}
-	
-	function delete_session() {
-		$_SESSION['user_login'] = array();
-	}
-	
-	/*	End Region User Session */
 }
